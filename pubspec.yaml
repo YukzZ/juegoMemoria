@@ -1,0 +1,38 @@
+name: juego_memoria
+description: A Very Good Project created by Very Good CLI.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  bloc: ^8.1.1
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.2
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+  provider: ^6.0.5
+  timer_count_down: ^2.2.2
+
+dev_dependencies:
+  bloc_test: ^9.1.1
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.3.0
+  very_good_analysis: ^3.1.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/baraja/back.png
+    - assets/baraja/as_corazon.png
+    - assets/baraja/as_diamante.png
+    - assets/baraja/as_espada.png
+    - assets/baraja/diez_espadas.png
+    - assets/baraja/nueve_diamantes.png
+    - assets/baraja/ocho_trebol.png
+    - assets/baraja/fondo.png
