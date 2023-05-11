@@ -1,7 +1,10 @@
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:juego_memoria/data/provider/cartas_provider.dart';
+import 'package:juego_memoria/modules/game/view/example.dart';
 import 'package:juego_memoria/widgets/card_poker.dart';
 import 'package:juego_memoria/widgets/custom_button.dart';
 import 'package:timer_count_down/timer_controller.dart';
@@ -18,6 +21,7 @@ class _GamePageState extends State<GamePage> {
   final CountdownController _countdownController = 
     CountdownController();
     int color = 100;
+    bool isSelected =  false ;
   @override
   Widget build(BuildContext context) {
     final cartasProvider = context.watch<CartasProvider>();
@@ -37,7 +41,7 @@ class _GamePageState extends State<GamePage> {
                   'Tiempo restante: $time segundos',
                   style: const TextStyle(
                     fontSize: 22,
-                    color: Colors.white
+                    color: Colors.white,
                   ),
                 ),
                 interval: const Duration(milliseconds: 100),
@@ -84,10 +88,25 @@ class _GamePageState extends State<GamePage> {
                     itemBuilder: (context, index) {
                       final carta = cartasProvider.cartas[index];
                       
-                      return Container(
-                        padding: const EdgeInsets.all(4),
-                        color: Colors.teal[carta.color],
-                        child: CardPoker(imgFront: carta.imageUrl),
+                      
+                      
+                      
+                      return GestureDetector(
+                        onTap: () {
+                          log('###########');
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          color: Colors.teal[carta.color],
+                          child: CardPoker(
+                            nombre: carta.name,
+                            imgFront: carta.imageUrl,
+                            // isSelected: isSelected,
+                            onPressed: () {
+                              log('###########');
+                            },
+                          ),
+                        ),
                       );
                     },
                     // crossAxisSpacing: 10,
@@ -178,7 +197,14 @@ class _GamePageState extends State<GamePage> {
                     customFontSize: 15,
                     buttonText: 'Jugar de nuevo', 
                     icon: Icons.play_arrow_outlined, 
-                    onPressed: _countdownController.restart,
+                    onPressed: () async {
+                  await Navigator.push(
+                    context, 
+                    MaterialPageRoute<void>(
+                      builder: (context) => const MemoryGame(), 
+                    ),
+                  );
+                },
                     color: const Color.fromARGB(255, 39,175,97),
                   ),
                   
