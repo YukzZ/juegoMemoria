@@ -3,7 +3,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:juego_memoria/data/selected_cartas.dart';
+import 'package:juego_memoria/modules/game/cubit/game_cubit.dart';
 
 class CardPoker extends StatefulWidget {
   const CardPoker({
@@ -27,18 +29,20 @@ class CardPoker extends StatefulWidget {
 class _CardPokerState extends State<CardPoker> {
   bool isSelected = false;
   String imgBack = 'assets/baraja/back.png';
-  // String imgFront = 'assets/baraja/as_corazon.png';
-  // https://www.pngegg.com/es/png-wvhco
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        isSelected=!isSelected;
+        
         SelectedCartas.cartasSeleccionada(widget.nombre);
+        context.read<GameCubit>().selectedCard(
+          card: widget.nombre, 
+          context: context,
+        );
         // widget.onPressed;
-        // log('###########');
+        //  log('###########');
         setState(() {
-          
+          isSelected=!isSelected;
         });
       },
       child: Image.asset(
