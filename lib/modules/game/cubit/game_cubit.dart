@@ -43,10 +43,11 @@ class GameCubit extends Cubit<GameState> {
     required String card,
     required BuildContext context,
   }) {
-    _selectCard.add(card);
-    if(_selectCard.isNotEmpty){
+    // _selectCard.add(card);
+    // if(_selectCard.isNotEmpty){&& !_selectCard.contains(card)
 
-        if (_selectCard.length < 2 && !_selectCard.contains(card)) {
+    //   }
+        if (_selectCard.length < 2 ) {
           _selectCard.add(card);
           if (_selectCard.length == 2) {
             
@@ -71,7 +72,6 @@ class GameCubit extends Cubit<GameState> {
             emit(state.copyWith(selectCartas: _selectCard));
           }
         }
-      }
     }
 
   Future<void> showGameOver({required BuildContext context}) async {

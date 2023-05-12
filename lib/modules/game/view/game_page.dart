@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:juego_memoria/data/provider/cartas_provider.dart';
 import 'package:juego_memoria/modules/game/cubit/game_cubit.dart';
-import 'package:juego_memoria/modules/game/view/example.dart';
 import 'package:juego_memoria/widgets/card_poker.dart';
 import 'package:juego_memoria/widgets/custom_button.dart';
 import 'package:timer_count_down/timer_controller.dart';
@@ -59,9 +58,9 @@ class _GamePageState extends State<GamePage> {
                         cubit.showGameOver(context: context);
                       },
                     ),
-                    const Text(
-                      'Puntaje: 0',
-                      style: TextStyle(
+                    Text(
+                      'Puntaje: ${cubit.puntaje}',
+                      style: const TextStyle(
                         fontSize: 22,
                         color: Colors.white,
                       ),
