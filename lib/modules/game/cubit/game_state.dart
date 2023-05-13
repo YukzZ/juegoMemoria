@@ -47,4 +47,13 @@ class SelectCardEvent extends MemoryGameEvent {
 
 class GameOverEvent extends MemoryGameEvent {}
 
-enum GameEstatus { none, loading, succes, failure, }
+enum GameEstatus { 
+  none, 
+  loading, 
+  succes, 
+  failure, 
+  incorrectCards, 
+  correctCards, 
+  finishGame,
+  isSelecting,
+}

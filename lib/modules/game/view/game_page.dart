@@ -31,6 +31,15 @@ class _GamePageState extends State<GamePage> {
         child: BlocBuilder<GameCubit, GameState>(
           builder: (context, state) {
             cubit = context.read<GameCubit>();
+            if(state.status == GameEstatus.finishGame){
+              _countdownController.pause();
+            }
+            if(state.status == GameEstatus.isSelecting){
+              isSelected = false;
+            }
+            if(state.status == GameEstatus.incorrectCards){
+              isSelected = true;
+            }
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(10),
@@ -58,6 +67,7 @@ class _GamePageState extends State<GamePage> {
                         cubit.showGameOver(context: context);
                       },
                     ),
+                    const SizedBox(height: 10,),
                     Text(
                       'Puntaje: ${cubit.puntaje}',
                       style: const TextStyle(
@@ -66,7 +76,7 @@ class _GamePageState extends State<GamePage> {
                       ),
                     ),
                     const SizedBox(
-                      height: 50,
+                      height: 40,
                     ),
                     Expanded(
                       child: Container(
@@ -98,91 +108,29 @@ class _GamePageState extends State<GamePage> {
                                   mainAxisSpacing: 10,
                                 ),
                                 itemBuilder: (context, index) {
-                                  // final carta = cartasProvider.cartas[index];
+                                  // final colors = cartasProvider.cartas[index];
                                   final carta = state.lsCartas[index];
-                                  return Container(
-                                    padding: const EdgeInsets.all(4),
-                                    color: Colors.teal[carta.color],
-                                    child: CardPoker(
-                                      nombre: carta.name,
-                                      imgFront: carta.imageUrl,
-                                      // isSelected: isSelected,
-                                      onPressed: () {
-                                        log('###########');
-                                        cubit.selectedCard(
-                                          card: state.lsCartas[index].name, 
-                                          context: context,
-                                        );
-                                      },
+                                  return IgnorePointer(
+                                    ignoring:  !isSelected,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(4),
+                                      color: Colors.teal[cubit.colors[index]],
+                                      child: CardPoker(
+                                        nombre: carta.name,
+                                        imgFront: carta.imageUrl,
+                                        // isSelected: isSelected,
+                                        onPressed: () {
+                                          log('###########');
+                                          cubit.selectedCard(
+                                            card: state.lsCartas[index].name, 
+                                            context: context,
+                                          );
+                                        },
+                                      ),
                                     ),
                                   );
                                 },
-                                // crossAxisSpacing: 10,
-                                // mainAxisSpacing: 10,
-                                // crossAxisCount: 3,
-                                // children: [
-
-                                //   Container(
-                                //     padding: const EdgeInsets.all(4),
-                                //     color: Colors.teal[100],
-                                //     child: const CardPoker(),
-                                //   ),
-                                //   Container(
-                                //     padding: const EdgeInsets.all(4),
-                                //     color: Colors.teal[200],
-                                //     child: const CardPoker(),
-                                //   ),
-                                //   Container(
-                                //     padding: const EdgeInsets.all(4),
-                                //     color: Colors.teal[300],
-                                //     child: const CardPoker(),
-                                //   ),
-                                //   Container(
-                                //     padding: const EdgeInsets.all(4),
-                                //     color: Colors.teal[400],
-                                //     child: const CardPoker(),
-                                //   ),
-                                //   Container(
-                                //     padding: const EdgeInsets.all(4),
-                                //     color: Colors.teal[500],
-                                //     child: const CardPoker(),
-                                //   ),
-                                //   Container(
-                                //     padding: const EdgeInsets.all(4),
-                                //     color: Colors.teal[600],
-                                //     child: const CardPoker(),
-                                //   ),
-                                //   Container(
-                                //     padding: const EdgeInsets.all(4),
-                                //     color: Colors.teal[100],
-                                //     child: const CardPoker(),
-                                //   ),
-                                //   Container(
-                                //     padding: const EdgeInsets.all(4),
-                                //     color: Colors.teal[200],
-                                //     child: const CardPoker(),
-                                //   ),
-                                //   Container(
-                                //     padding: const EdgeInsets.all(4),
-                                //     color: Colors.teal[300],
-                                //     child: const CardPoker(),
-                                //   ),
-                                //   Container(
-                                //     padding: const EdgeInsets.all(4),
-                                //     color: Colors.teal[400],
-                                //     child: const CardPoker(),
-                                //   ),
-                                //   Container(
-                                //     padding: const EdgeInsets.all(4),
-                                //     color: Colors.teal[500],
-                                //     child: const CardPoker(),
-                                //   ),
-                                //   Container(
-                                //     padding: const EdgeInsets.all(4),
-                                //     color: Colors.teal[600],
-                                //     child: const CardPoker(),
-                                //   ),
-                                // ],
+                               
                               ),
                       ),
                     ),
@@ -198,7 +146,12 @@ class _GamePageState extends State<GamePage> {
                           customFontSize: 15,
                           buttonText: 'Iniciar Juego',
                           icon: Icons.play_arrow,
-                          onPressed: _countdownController.start,
+                          onPressed: () {
+                            _countdownController.start();
+                            setState(() {
+                              isSelected = true;
+                            });
+                          },
                           color: const Color.fromARGB(255, 39, 175, 97),
                         ),
                         CustomButton(
@@ -207,7 +160,13 @@ class _GamePageState extends State<GamePage> {
                           customFontSize: 15,
                           buttonText: 'Jugar de nuevo',
                           icon: Icons.play_arrow_outlined,
-                          onPressed: _countdownController.restart,
+                          onPressed: () {
+                            _countdownController.restart();
+                            cubit.newGame();
+                            setState(() {
+                              isSelected = true;
+                            });
+                          },
                           color: const Color.fromARGB(255, 39, 175, 97),
                         ),
                       ],

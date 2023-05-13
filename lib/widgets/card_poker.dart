@@ -1,6 +1,5 @@
 
 
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,25 +28,51 @@ class CardPoker extends StatefulWidget {
 class _CardPokerState extends State<CardPoker> {
   bool isSelected = false;
   String imgBack = 'assets/baraja/back.png';
+  Widget childWidget = const CircularProgressIndicator();
+  
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<GameCubit>();
+    if(cubit.state.status == GameEstatus.succes){
+      isSelected = false;
+        childWidget = Image.asset(
+        isSelected ? widget.imgFront : imgBack,
+      );
+    }
+    else if(cubit.state.status == GameEstatus.none){
+      childWidget = Image.asset(
+        isSelected ? widget.imgFront : imgBack,
+      );
+    }
+     else if(cubit.state.status == GameEstatus.incorrectCards){
+      isSelected = false;
+      childWidget = Image.asset(
+          imgBack,
+        );
+    }
+    for(var i in cubit.correctCards){
+      if(i == widget.nombre){
+        childWidget = Image.asset(
+          widget.imgFront,
+        );
+      }
+    }
     return GestureDetector(
       onTap: () {
         
         SelectedCartas.cartasSeleccionada(widget.nombre);
-        context.read<GameCubit>().selectedCard(
+        cubit.selectedCard(
           card: widget.nombre, 
           context: context,
         );
-        // widget.onPressed;
-        //  log('###########');
+        
         setState(() {
           isSelected=!isSelected;
+          
         });
       },
-      child: Image.asset(
-        isSelected ? widget.imgFront : imgBack,
-      )
+      
+      child: childWidget,
     );
   }
 }
