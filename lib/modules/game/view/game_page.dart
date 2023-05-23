@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:juego_memoria/data/provider/cartas_provider.dart';
 import 'package:juego_memoria/modules/game/cubit/game_cubit.dart';
 import 'package:juego_memoria/widgets/card_poker.dart';
 import 'package:juego_memoria/widgets/custom_button.dart';
@@ -23,7 +22,6 @@ class _GamePageState extends State<GamePage> {
   late GameCubit cubit;
   @override
   Widget build(BuildContext context) {
-    final cartasProvider = context.watch<CartasProvider>();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 35, 40, 72),
       body: BlocProvider(
@@ -79,10 +77,10 @@ class _GamePageState extends State<GamePage> {
                       height: 40,
                     ),
                     Expanded(
-                      child: Container(
+                      child: DecoratedBox(
                         decoration: BoxDecoration(
                           image: const DecorationImage(
-                              image: AssetImage('assets/baraja/fondo.png')),
+                              image: AssetImage('assets/baraja/fondo.png'),),
                           border: Border.all(width: 2),
                           color: const Color.fromARGB(255, 54, 61, 107),
                           borderRadius: BorderRadius.circular(40),
@@ -102,13 +100,13 @@ class _GamePageState extends State<GamePage> {
                                 ),
                                 itemCount: state.lsCartas.length,
                                 gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3,
                                   crossAxisSpacing: 10,
                                   mainAxisSpacing: 10,
                                 ),
                                 itemBuilder: (context, index) {
-                                  // final colors = cartasProvider.cartas[index];
+                                // final colors = cartasProvider.cartas[index];
                                   final carta = state.lsCartas[index];
                                   return IgnorePointer(
                                     ignoring:  !isSelected,

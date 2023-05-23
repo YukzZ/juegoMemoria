@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:juego_memoria/data/selected_cartas.dart';
 import 'package:juego_memoria/modules/game/cubit/game_cubit.dart';
 
 class CardPoker extends StatefulWidget {
@@ -50,7 +49,7 @@ class _CardPokerState extends State<CardPoker> {
           imgBack,
         );
     }
-    for(var i in cubit.correctCards){
+    for(final i in cubit.correctCards){
       if(i == widget.nombre){
         childWidget = Image.asset(
           widget.imgFront,
@@ -59,8 +58,6 @@ class _CardPokerState extends State<CardPoker> {
     }
     return GestureDetector(
       onTap: () {
-        
-        SelectedCartas.cartasSeleccionada(widget.nombre);
         cubit.selectedCard(
           card: widget.nombre, 
           context: context,

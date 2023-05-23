@@ -20,7 +20,7 @@ class App extends StatelessWidget {
           appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
           colorScheme: ColorScheme.fromSwatch(
             accentColor: const Color(0xFF13B9FF),
-            backgroundColor:  const Color.fromARGB(255, 35,40,72)
+            backgroundColor:  const Color.fromARGB(255, 35,40,72),
           ),
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
