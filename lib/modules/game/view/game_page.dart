@@ -22,6 +22,9 @@ class _GamePageState extends State<GamePage> {
   late GameCubit cubit;
   @override
   Widget build(BuildContext context) {
+    final sizeWidth = MediaQuery.of(context).size.width;
+    final sizeHeight = MediaQuery.of(context).size.height;
+    
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 35, 40, 72),
       body: BlocProvider(
@@ -40,12 +43,12 @@ class _GamePageState extends State<GamePage> {
             }
             return Center(
               child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: EdgeInsets.all(sizeHeight * 0.009),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    const SizedBox(
-                      height: 30,
+                    SizedBox(
+                      height: sizeHeight *0.03,
                     ),
                     Countdown(
                       controller: _countdownController,
@@ -65,7 +68,7 @@ class _GamePageState extends State<GamePage> {
                         cubit.showGameOver(context: context);
                       },
                     ),
-                    const SizedBox(height: 10,),
+                    SizedBox(height: sizeHeight * 0.01,),
                     Text(
                       'Puntaje: ${cubit.puntaje}',
                       style: const TextStyle(
@@ -73,8 +76,8 @@ class _GamePageState extends State<GamePage> {
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(
-                      height: 40,
+                    SizedBox(
+                      height: sizeHeight * 0.04,
                     ),
                     Expanded(
                       child: DecoratedBox(
@@ -93,17 +96,19 @@ class _GamePageState extends State<GamePage> {
                               )
                             : GridView.builder(
                                 primary: false,
-                                padding: const EdgeInsets.only(
-                                  left: 10,
-                                  right: 10,
-                                  top: 40,
+                                padding: EdgeInsets.only(
+                                  left: sizeHeight *0.01,
+                                  right: sizeHeight *0.01,
+                                  top: sizeHeight *0.04,
+                                  bottom: sizeHeight * 0.04,
                                 ),
                                 itemCount: state.lsCartas.length,
                                 gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3,
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10,
+                                  mainAxisExtent: sizeHeight * 0.138,
+                                  crossAxisSpacing: sizeWidth *0.015,
+                                  mainAxisSpacing: sizeHeight * 0.015,
                                 ),
                                 itemBuilder: (context, index) {
                                 // final colors = cartasProvider.cartas[index];
@@ -132,15 +137,15 @@ class _GamePageState extends State<GamePage> {
                               ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 30,
+                    SizedBox(
+                      height: sizeHeight * 0.03,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         CustomButton(
-                          height: 40,
-                          width: 150,
+                          height: sizeHeight * 0.055,
+                          width: sizeWidth * 0.4,
                           customFontSize: 15,
                           buttonText: 'Iniciar Juego',
                           icon: Icons.play_arrow,
@@ -153,8 +158,8 @@ class _GamePageState extends State<GamePage> {
                           color: const Color.fromARGB(255, 39, 175, 97),
                         ),
                         CustomButton(
-                          height: 40,
-                          width: 150,
+                          height: sizeHeight * 0.055,
+                          width: sizeWidth * 0.4,
                           customFontSize: 15,
                           buttonText: 'Jugar de nuevo',
                           icon: Icons.play_arrow_outlined,
@@ -169,12 +174,12 @@ class _GamePageState extends State<GamePage> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: sizeHeight * 0.02,
                     ),
                     CustomButton(
-                      height: 40,
-                      width: 100,
+                      height: sizeHeight * 0.055,
+                      width: sizeWidth * 0.3,
                       customFontSize: 15,
                       buttonText: 'Salir',
                       icon: Icons.exit_to_app,

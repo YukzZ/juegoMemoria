@@ -8,6 +8,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sizeWidth = MediaQuery.of(context).size.width;
+    final sizeHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 35,40,72),
       body: Center(
@@ -42,8 +44,8 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     CustomButton(
-                      height: 50,
-                      width: 150,
+                      height: sizeHeight * 0.055,
+                      width: sizeWidth * 0.5,
                       customFontSize: 20,
                       buttonText: 'Iniciar Juego',
                       icon: Icons.start_outlined,
